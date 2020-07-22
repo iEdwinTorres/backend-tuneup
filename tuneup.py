@@ -8,9 +8,9 @@ Use the timeit and cProfile libraries to find bad code.
 __author__ = "Edwin Torres"
 
 import cProfile
+import timeit
 import pstats
 import functools
-import timeit
 
 
 def profile(func):
@@ -23,10 +23,12 @@ def profile(func):
         performance_object.enable()
         result = func(*args, **kwargs)
         performance_object.disable()
+        
         get_stats_obj = pstats.Stats(performance_object)
         get_stats_obj.strip_dirs()
         get_stats_obj.sort_stats('cumulative')
         get_stats_obj.print_stats
+        
         return result
     return profile_wrapper
 
